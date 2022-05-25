@@ -48,7 +48,7 @@ BEGIN
 		`chatID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		`message` VARCHAR(500),
 		`fromEmail` VARCHAR(100) NOT NULL,
-		FOREIGN KEY (`fromEmail`) REFERENCES `tblPlayer` (`email`)
+		FOREIGN KEY (`fromEmail`) REFERENCES `tblPlayer` (`email`) ON DELETE CASCADE
   );
 END //
 DELIMITER ;
@@ -234,6 +234,7 @@ CREATE PROCEDURE deleteAccount(
 	IN pUsername VARCHAR(50)
     )
 BEGIN
+	SET FOREIGN_KEY_CHECKS=0;
     IF (
 		SELECT `username` 
         FROM `tblPlayer` 
@@ -246,9 +247,9 @@ BEGIN
 	ELSE
 		SELECT CONCAT("ERROR: '", pUsername, "' does not exist") AS MESSAGE;
 	END IF;
+    SET FOREIGN_KEY_CHECKS=1;
 END //
 DELIMITER ;
-
 -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 -- Get all current players 
 -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -566,7 +567,7 @@ CALL Login('Player', 'P@ssword2');
 -- Get all users 
  CALL GetAllUsers();
 -- delete account
-	-- CALL deleteAccount('Player');
+-- CALL deleteAccount('Player2');
 -- Generate map 10x10 grid
 CALL genMap(); 
 -- Player joining the game
@@ -577,7 +578,7 @@ CALL joinGame ("Player2@mail.com");
 CALL playerMovement ("player2@mail.com", 61);
 -- Chat
 CALL chat ("Hello World!","player2@mail.com");
--- Finish Game
+-- Finish Game | Need a player with current score before execution
 CALL finishGame ();
 -- Admin Player update
 CALL adminUpdatePlayerInfo ("Player2@mail.com", "Player4", "P@ssword2");
