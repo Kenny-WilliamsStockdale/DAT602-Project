@@ -17,7 +17,11 @@ namespace DAT602_MS2_ConsoleApp
             Console.WriteLine("Message is " + aDataAccess.Register("Player3", "P@ssword2", "player3@mail.com", "0"));
             Console.WriteLine("Message is " + aDataAccess.Login("Player", "P@ssword2"));
             Console.WriteLine("Message is " + aDataAccess.Logout("Player"));
+            //Console.WriteLine("Message is " + aDataAccess.joinGame("Player3@mail.com"));
             Console.WriteLine("Message is " + aDataAccess.deleteAccount("Player3"));
+            //Console.WriteLine("Message is " + aDataAccess.updatePlayerHighScore("player2@mail.com"));
+
+
 
         }
     }

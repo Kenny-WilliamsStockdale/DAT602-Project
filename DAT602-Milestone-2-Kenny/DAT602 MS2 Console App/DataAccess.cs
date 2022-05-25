@@ -30,6 +30,7 @@ namespace DAT602_MS2_ConsoleApp
 
             }
         }
+        //REGISTER
         public string Register(string pUserName, string pPassword, string pEmail, string pIsAdmin)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
@@ -53,6 +54,7 @@ namespace DAT602_MS2_ConsoleApp
             return (aDataSet.Tables[0].Rows[0])["message"].ToString();
         }
 
+        //LOGIN
         public string Login(string pUserName, string pPassword)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
@@ -70,6 +72,7 @@ namespace DAT602_MS2_ConsoleApp
             return (aDataSet.Tables[0].Rows[0])["message"].ToString();
         }
 
+        //LOGOUT
         public string Logout(string pUserName)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
@@ -83,6 +86,8 @@ namespace DAT602_MS2_ConsoleApp
             // expecting one table with one row
             return (aDataSet.Tables[0].Rows[0])["message"].ToString();
         }
+
+        //DELETE ACCOUNT
         public string deleteAccount(string pUserName)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
@@ -96,5 +101,35 @@ namespace DAT602_MS2_ConsoleApp
             // expecting one table with one row
             return (aDataSet.Tables[0].Rows[0])["message"].ToString();
         }
+
+        ////JOIN GAME -need to fix with single output from MySQL
+        //public string joinGame(string pEmail)
+        //{
+        //    List<MySqlParameter> p = new List<MySqlParameter>();
+        //    var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+        //    aP.Value = pEmail;
+        //    p.Add(aP);
+
+        //    var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "joinGame(@pEmail)", p.ToArray());
+
+
+        //    // expecting one table with one row
+        //    return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        //}
+
+        ////UPDATE PLAYER HIGH SCORE - Need a player with current score greater than the player's high score before execution
+        //public string updatePlayerHighScore(string pEmail)
+        //{
+        //    List<MySqlParameter> p = new List<MySqlParameter>();
+        //    var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+        //    aP.Value = pEmail;
+        //    p.Add(aP);
+
+        //    var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "updatePlayerHighScore(@pEmail)", p.ToArray());
+
+
+        //    // expecting one table with one row
+        //    return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        //}
     }
 }
