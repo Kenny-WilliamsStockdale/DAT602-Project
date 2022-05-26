@@ -122,6 +122,7 @@ CREATE PROCEDURE Login( IN pUserName VARCHAR(50), IN pPassword  VARCHAR(50))
 COMMENT 'Check login'
 BEGIN
     DECLARE numAttempts INT DEFAULT 0;
+    SET SQL_SAFE_UPDATES = 0;
 	-- 'Check for valid login', 
     -- if valid then select message "Logged in" and reset Attempts to 0, 
     IF EXISTS ( SELECT * 
@@ -172,6 +173,7 @@ BEGIN
 		SELECT 'Invalid user name and password';
       END IF;
     END IF;
+    SET SQL_SAFE_UPDATES = 1;
 END $$
 DELIMITER ;
 
@@ -183,6 +185,7 @@ DROP PROCEDURE IF EXISTS Logout;
 DELIMITER //
 CREATE PROCEDURE Logout(IN pUsername VARCHAR(50))
 BEGIN
+	SET SQL_SAFE_UPDATES = 0;
     IF EXISTS (SELECT * 
 		FROM `tblPlayer`
 		WHERE `username` = pUserName)
@@ -191,8 +194,9 @@ BEGIN
 		SET `activeStatus` = 0
 		WHERE `username` = pUserName;
         
-		SELECT CONCAT(pUsername, ' LOGGED OUT') AS MESSAGE;
+		SELECT CONCAT(pUsername, ' LOGGED OUT') AS message;
 	END IF;
+	SET SQL_SAFE_UPDATES = 1;
 END //
 DELIMITER ;
 
@@ -214,12 +218,12 @@ BEGIN
 		WHERE `username` = pUserName) 
 		
 	THEN
-		SELECT 'USER ALREADY EXISTS' AS MESSAGE;
+		SELECT 'USER ALREADY EXISTS' AS message;
 	ELSE 
 		INSERT INTO `tblPlayer`(`email`, `username`, `password`,`isAdmin`)
 		VALUE (pEmail, pUserName, pPassword, pIsAdmin); -- Takes in userinputs
 		
-		SELECT CONCAT('ADDED USER: ', pUsername) AS MESSAGE;
+		SELECT CONCAT('ADDED USER: ', pUsername) AS message;
 	END IF;
 END $$
 DELIMITER ;
@@ -234,6 +238,7 @@ CREATE PROCEDURE deleteAccount(
 	IN pUsername VARCHAR(50)
     )
 BEGIN
+	SET SQL_SAFE_UPDATES = 0;
 	SET FOREIGN_KEY_CHECKS=0;
     IF (
 		SELECT `username` 
@@ -243,11 +248,12 @@ BEGIN
 		DELETE FROM `tblPlayer`
 		WHERE Username = pUsername;
 			
-		SELECT CONCAT("Account deleted: ", pUsername) AS MESSAGE;
+		SELECT CONCAT("Account deleted: ", pUsername) AS message;
 	ELSE
-		SELECT CONCAT("ERROR: '", pUsername, "' does not exist") AS MESSAGE;
+		SELECT CONCAT("ERROR: '", pUsername, "' does not exist") AS message;
 	END IF;
     SET FOREIGN_KEY_CHECKS=1;
+    SET SQL_SAFE_UPDATES = 1;
 END //
 DELIMITER ;
 -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -354,6 +360,7 @@ BEGIN
 		WHERE `tileID` = randTile;
 		SET loopCounter = loopCounter + 1; 
 	END WHILE;
+    SELECT "Map Generated, Hometile set, Obstacles and coins placed. Ready to play!" as message;
 END $$
 DELIMITER ;
 
@@ -364,17 +371,16 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS joinGame;
 DELIMITER //
 CREATE PROCEDURE joinGame(
-	IN pEmail VARCHAR(50)
+	 IN pEmail VARCHAR(50)
     )
 BEGIN
-	SELECT `email`
-	FROM `tblPlayer`
-	WHERE `email` = pEmail;
-
+	SELECT `email` 	INTO @email
+ 	FROM `tblPlayer`
+ 	WHERE `email` = pEmail;
 	INSERT INTO `tblPlayerTile` (`playerEmail`, `tileID`)
-	VALUES (pEmail, 61);
+ 	VALUES (pEmail, 61);
 
-	SELECT CONCAT("Welcome to the grid ", pEmail) AS MESSAGE;
+	SELECT CONCAT("Welcome to the grid ", pEmail) AS message;
 END //
 DELIMITER ;
 
@@ -462,7 +468,7 @@ BEGIN
 			SET `coin` = 0
 			WHERE `tileID` = pTileID;
 
-			SELECT 'Player has moved and collected coin(s)' AS MESSAGE;
+			SELECT 'Player has moved and collected coin(s)' AS message;
 			CALL updatePlayerHighScore (pEmail);
 
 		ELSEIF @blocked = 0 AND @coin = 0 THEN  -- checks to see if no obstacles or coin(s). If none then player can move to the empty tile.
@@ -471,13 +477,13 @@ BEGIN
 			WHERE 
 			`playerEmail` = pEmail;
 
-			SELECT 'Player has moved!!!' AS MESSAGE;
+			SELECT 'Player has moved!!!' AS message;
 
 		ELSEIF	@blocked = 1 THEN  -- Checks to see if obstacles, if so then don't move
-			SELECT 'There is an obstacle in the way!!!' AS MESSAGE;
+			SELECT 'There is an obstacle in the way!!!' AS message;
 		END IF;
 	ELSE	
-		SELECT 'Player cant move to this tile!!!' AS MESSAGE;
+		SELECT 'Player cant move to this tile!!!' AS message;
 	END IF;
 	SET SQL_SAFE_UPDATES = 1;
 END //
@@ -516,7 +522,7 @@ BEGIN
 							SELECT MAX(`currentScore`)
 							FROM `tblPlayer`);
                             
-	SELECT concat(@username, " is the winner") as MESSAGE;
+	SELECT concat(@username, " is the winner") as message;
 
 	UPDATE `tblPlayer`
 	SET `currentScore` = 0;
@@ -548,7 +554,7 @@ BEGIN
 		SET `username`= pUserName, `password`= pPassword
 		WHERE tblPlayer.email = pUser;
 	END IF;
-		SELECT 'update success' as message;
+		SELECT CONCAT("Updated ", pUser, ", Success!") as message;
 END //
 DELIMITER ;
 
@@ -556,29 +562,29 @@ DELIMITER ;
 -- Call Procedures
 -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
--- Login
-CALL Login('Player', 'P@ssword2');
--- Logout
- CALL Logout('Player');
 -- Register
- CALL Register('Player3', 'P@ssword2', 'player3@mail.com', 0);
+CALL Register('Player3', 'P@ssword2', 'player3@mail.com', 0);
+-- Login
+CALL Login('Player3', 'P@ssword2');
+-- Logout
+CALL Logout('Player3');
 -- Get all current players 
  CALL GetAllPlayers();
 -- Get all users 
  CALL GetAllUsers();
 -- delete account
--- CALL deleteAccount('Player2');
+CALL deleteAccount('Player3');
 -- Generate map 10x10 grid
 CALL genMap(); 
 -- Player joining the game
-CALL joinGame ("Player2@mail.com");
--- Player update HighScore
+CALL joinGame('player2@mail.com');
+-- Player update HighScore | Need a player record with current score greater than the player's high score before execution
 	-- CALL updatePlayerHighScore ("player2@mail.com");
 -- Player movement
-CALL playerMovement ("player2@mail.com", 61);
+CALL playerMovement("player2@mail.com", 61);
 -- Chat
-CALL chat ("Hello World!","player2@mail.com");
--- Finish Game | Need a player with current score before execution
-CALL finishGame ();
+CALL chat("Hello World!","player2@mail.com");
+-- Finish Game | Need a player record with current score before execution
+CALL finishGame();
 -- Admin Player update
-CALL adminUpdatePlayerInfo ("Player2@mail.com", "Player4", "P@ssword2");
+CALL adminUpdatePlayerInfo("player2@mail.com", "Player4", "P@ssword2");
