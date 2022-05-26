@@ -102,34 +102,101 @@ namespace DAT602_MS2_ConsoleApp
             return (aDataSet.Tables[0].Rows[0])["message"].ToString();
         }
 
-        ////JOIN GAME -need to fix with single output from MySQL
-        //public string joinGame(string pEmail)
-        //{
-        //    List<MySqlParameter> p = new List<MySqlParameter>();
-        //    var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
-        //    aP.Value = pEmail;
-        //    p.Add(aP);
+        //GENERATE MAP
+        public string genMap()
+        {
+            List<MySqlParameter> p = new List<MySqlParameter>();
 
-        //    var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "joinGame(@pEmail)", p.ToArray());
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "genMap()", p.ToArray());
 
 
-        //    // expecting one table with one row
-        //    return (aDataSet.Tables[0].Rows[0])["message"].ToString();
-        //}
+            // expecting one table with one row
+            return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        }
 
-        ////UPDATE PLAYER HIGH SCORE - Need a player with current score greater than the player's high score before execution
-        //public string updatePlayerHighScore(string pEmail)
-        //{
-        //    List<MySqlParameter> p = new List<MySqlParameter>();
-        //    var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
-        //    aP.Value = pEmail;
-        //    p.Add(aP);
+        //JOIN GAME 
+        public string joinGame(string pEmail)
+        {
+            List<MySqlParameter> p = new List<MySqlParameter>();
+            var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+            aP.Value = pEmail;
+            p.Add(aP);
 
-        //    var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "updatePlayerHighScore(@pEmail)", p.ToArray());
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "joinGame(@pEmail)", p.ToArray());
 
 
-        //    // expecting one table with one row
-        //    return (aDataSet.Tables[0].Rows[0])["message"].ToString();
-        //}
+            // expecting one table with one row
+            return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        }
+
+
+        //PLAYER MOVEMENT
+        public string playerMovement(string pEmail, int pTileID)
+        {
+            List<MySqlParameter> p = new List<MySqlParameter>();
+            var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+            aP.Value = pEmail;
+            p.Add(aP);
+            var aP2 = new MySqlParameter("@pTileID", MySqlDbType.Int32);
+            aP2.Value = pTileID;
+            p.Add(aP2);
+
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "playerMovement(@pEmail,@pTileID)", p.ToArray());
+
+
+            // expecting one table with one row
+            return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        }
+
+        //CHAT
+        public string chat(string pContent, string pEmail)
+        {
+            List<MySqlParameter> p = new List<MySqlParameter>();
+            var aP = new MySqlParameter("@pContent", MySqlDbType.VarChar, 500);
+            aP.Value = pContent;
+            p.Add(aP);
+            var aP2 = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+            aP2.Value = pEmail;
+            p.Add(aP2);
+
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "chat(@pContent,@pEmail)", p.ToArray());
+
+
+            // expecting one table with one row
+            return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        }
+
+        //FINISH GAME | must have a current score on a player record
+        public string finishGame()
+        {
+            List<MySqlParameter> p = new List<MySqlParameter>();
+
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "finishGame()", p.ToArray());
+
+
+            // expecting one table with one row
+            return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        }
+
+        //ADMIN UPDATE PLAYER INFORMATION 
+        public string adminUpdatePlayerInfo( string pUser, string pUserName, string pPassword )
+        {
+            List<MySqlParameter> p = new List<MySqlParameter>();
+            var aP = new MySqlParameter("@pUser", MySqlDbType.VarChar, 50);
+            aP.Value = pUser;
+            p.Add(aP);
+            var aP2 = new MySqlParameter("@pUserName", MySqlDbType.VarChar, 50);
+            aP2.Value = pUserName;
+            p.Add(aP2);
+            var aP3 = new MySqlParameter("@pPassword", MySqlDbType.VarChar, 50);
+            aP3.Value = pPassword;
+            p.Add(aP3);
+
+            var aDataSet = MySqlHelper.ExecuteDataset(DataAccess.mySqlConnection, "adminUpdatePlayerInfo(@pUser,@pUserName,@pPassword)", p.ToArray());
+
+
+            // expecting one table with one row
+            return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+        }
     }
 }
