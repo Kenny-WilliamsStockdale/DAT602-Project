@@ -43,7 +43,8 @@
             this.boxPasswordRegister.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.boxPasswordRegister.Location = new System.Drawing.Point(179, 198);
             this.boxPasswordRegister.Name = "boxPasswordRegister";
-            this.boxPasswordRegister.Size = new System.Drawing.Size(160, 41);
+            this.boxPasswordRegister.PasswordChar = '*';
+            this.boxPasswordRegister.Size = new System.Drawing.Size(265, 41);
             this.boxPasswordRegister.TabIndex = 7;
             // 
             // labelPasswordRegister
@@ -61,7 +62,7 @@
             this.boxUsernameRegister.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.boxUsernameRegister.Location = new System.Drawing.Point(179, 129);
             this.boxUsernameRegister.Name = "boxUsernameRegister";
-            this.boxUsernameRegister.Size = new System.Drawing.Size(160, 41);
+            this.boxUsernameRegister.Size = new System.Drawing.Size(265, 41);
             this.boxUsernameRegister.TabIndex = 5;
             // 
             // labelUsernameRegister
@@ -79,7 +80,7 @@
             this.boxEmailRegister.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.boxEmailRegister.Location = new System.Drawing.Point(179, 57);
             this.boxEmailRegister.Name = "boxEmailRegister";
-            this.boxEmailRegister.Size = new System.Drawing.Size(160, 41);
+            this.boxEmailRegister.Size = new System.Drawing.Size(265, 41);
             this.boxEmailRegister.TabIndex = 9;
             // 
             // labelEmailRegister
@@ -95,7 +96,7 @@
             // btnOkRegister
             // 
             this.btnOkRegister.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnOkRegister.Location = new System.Drawing.Point(296, 337);
+            this.btnOkRegister.Location = new System.Drawing.Point(517, 337);
             this.btnOkRegister.Name = "btnOkRegister";
             this.btnOkRegister.Size = new System.Drawing.Size(98, 34);
             this.btnOkRegister.TabIndex = 11;
@@ -118,7 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 383);
+            this.ClientSize = new System.Drawing.Size(627, 383);
             this.Controls.Add(this.btnOkRegister);
             this.Controls.Add(this.btnCancelRegister);
             this.Controls.Add(this.boxEmailRegister);
