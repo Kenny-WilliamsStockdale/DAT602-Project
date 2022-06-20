@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelUsernameLogin = new System.Windows.Forms.Label();
-            this.boxUsernameLogin = new System.Windows.Forms.TextBox();
+            this.labelEmailLogin = new System.Windows.Forms.Label();
+            this.boxEmailLogin = new System.Windows.Forms.TextBox();
             this.boxPasswordLogin = new System.Windows.Forms.TextBox();
             this.labelPasswordLogin = new System.Windows.Forms.Label();
             this.btnOKLogin = new System.Windows.Forms.Button();
@@ -37,30 +37,31 @@
             this.btnCancelLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // labelUsernameLogin
+            // labelEmailLogin
             // 
-            this.labelUsernameLogin.AutoSize = true;
-            this.labelUsernameLogin.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelUsernameLogin.Location = new System.Drawing.Point(52, 103);
-            this.labelUsernameLogin.Name = "labelUsernameLogin";
-            this.labelUsernameLogin.Size = new System.Drawing.Size(127, 35);
-            this.labelUsernameLogin.TabIndex = 0;
-            this.labelUsernameLogin.Text = "Username";
+            this.labelEmailLogin.AutoSize = true;
+            this.labelEmailLogin.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelEmailLogin.Location = new System.Drawing.Point(104, 103);
+            this.labelEmailLogin.Name = "labelEmailLogin";
+            this.labelEmailLogin.Size = new System.Drawing.Size(75, 35);
+            this.labelEmailLogin.TabIndex = 0;
+            this.labelEmailLogin.Text = "Email";
             // 
-            // boxUsernameLogin
+            // boxEmailLogin
             // 
-            this.boxUsernameLogin.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.boxUsernameLogin.Location = new System.Drawing.Point(185, 100);
-            this.boxUsernameLogin.Name = "boxUsernameLogin";
-            this.boxUsernameLogin.Size = new System.Drawing.Size(160, 41);
-            this.boxUsernameLogin.TabIndex = 1;
+            this.boxEmailLogin.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.boxEmailLogin.Location = new System.Drawing.Point(185, 100);
+            this.boxEmailLogin.Name = "boxEmailLogin";
+            this.boxEmailLogin.Size = new System.Drawing.Size(271, 41);
+            this.boxEmailLogin.TabIndex = 1;
             // 
             // boxPasswordLogin
             // 
             this.boxPasswordLogin.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.boxPasswordLogin.Location = new System.Drawing.Point(185, 169);
             this.boxPasswordLogin.Name = "boxPasswordLogin";
-            this.boxPasswordLogin.Size = new System.Drawing.Size(160, 41);
+            this.boxPasswordLogin.PasswordChar = '*';
+            this.boxPasswordLogin.Size = new System.Drawing.Size(271, 41);
             this.boxPasswordLogin.TabIndex = 3;
             // 
             // labelPasswordLogin
@@ -76,7 +77,7 @@
             // btnOKLogin
             // 
             this.btnOKLogin.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnOKLogin.Location = new System.Drawing.Point(296, 337);
+            this.btnOKLogin.Location = new System.Drawing.Point(517, 337);
             this.btnOKLogin.Name = "btnOKLogin";
             this.btnOKLogin.Size = new System.Drawing.Size(98, 34);
             this.btnOKLogin.TabIndex = 4;
@@ -87,7 +88,7 @@
             // btnRegisterLogin
             // 
             this.btnRegisterLogin.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnRegisterLogin.Location = new System.Drawing.Point(156, 252);
+            this.btnRegisterLogin.Location = new System.Drawing.Point(261, 253);
             this.btnRegisterLogin.Name = "btnRegisterLogin";
             this.btnRegisterLogin.Size = new System.Drawing.Size(98, 34);
             this.btnRegisterLogin.TabIndex = 5;
@@ -110,14 +111,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 383);
+            this.ClientSize = new System.Drawing.Size(627, 383);
             this.Controls.Add(this.btnCancelLogin);
             this.Controls.Add(this.btnRegisterLogin);
             this.Controls.Add(this.btnOKLogin);
             this.Controls.Add(this.boxPasswordLogin);
             this.Controls.Add(this.labelPasswordLogin);
-            this.Controls.Add(this.boxUsernameLogin);
-            this.Controls.Add(this.labelUsernameLogin);
+            this.Controls.Add(this.boxEmailLogin);
+            this.Controls.Add(this.labelEmailLogin);
             this.Name = "Login";
             this.Text = "Login";
             this.ResumeLayout(false);
@@ -127,8 +128,8 @@
 
         #endregion
 
-        private Label labelUsernameLogin;
-        private TextBox boxUsernameLogin;
+        private Label labelEmailLogin;
+        private TextBox boxEmailLogin;
         private TextBox boxPasswordLogin;
         private Label labelPasswordLogin;
         private Button btnOKLogin;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,17 +36,17 @@ namespace DAT602_MS3_Game_GUI
         }
 
         //LOGIN
-        public string Login(string pUserName, string pPassword)
+        public string Login(string pEmail, string pPassword)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
-            var aP = new MySqlParameter("@pUserName", MySqlDbType.VarChar, 50);
-            aP.Value = pUserName;
+            var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+            aP.Value = pEmail;
             p.Add(aP);
             var aP2 = new MySqlParameter("@pPassword", MySqlDbType.VarChar, 50);
             aP2.Value = pPassword;
             p.Add(aP2);
 
-            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Login(@pUserName,@pPassword)", p.ToArray());
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Login(@pEmail,@pPassword)", p.ToArray());
 
 
             // expecting one table with one row
@@ -179,8 +180,40 @@ namespace DAT602_MS3_Game_GUI
             return (aDataSet.Tables[0].Rows[0])["message"].ToString();
         }
 
-        //CHECKING DATA
-        
+        //GET SPEC PLAYER INFORMATION
+        public DataRow GetPlayerInfo(string pEmail)
+        {
+            List<MySqlParameter> p = new List<MySqlParameter>();
+            var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+            aP.Value = pEmail;
+            p.Add(aP);
+
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "GetAllPlayers(pEmail)", p.ToArray());
+
+
+            // expecting one table with one row
+            return aDataSet.Tables[0].Rows[0];
+        }
+
+        //GET ALL ACTIVE PLAYER INFORMATION
+        public List<User> GetAllPlayers()
+        {
+            List<User> lsUsers = new List<User>();
+
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Call GetAllPlayers()");
+            foreach (DataRow record in aDataSet.Tables[0].Rows)
+            {
+                User lcUser = new User();
+                lcUser.UserName = record.Field<String>("UserName");
+                lcUser.Email = record.Field<String>("Email");
+                lcUser.HighScore = record.Field<Int32>("highScore");
+                lcUser.IsAdmin = record.Field<Boolean>("isAdmin");
+                lsUsers.Add(lcUser);
+            }
+
+            // expecting one table with one row
+            return lsUsers;
+        }
     }
    
 }

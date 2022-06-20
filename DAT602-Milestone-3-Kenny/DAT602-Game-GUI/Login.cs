@@ -16,6 +16,7 @@ namespace DAT602_MS3_Game_GUI
         private Register _register;
         private User _user;
         private GameLobby _gameLobby;
+        private DataAccess _dbAccess = new();
 
         public Login()
         {
@@ -33,21 +34,45 @@ namespace DAT602_MS3_Game_GUI
             _register = new Register();
             _user = new User();
             this.Hide();
-            if (_register.ShowDialog(this, _user))
+            if (_user != null && _register.ShowDialog(this, _user))
             {
-                this.Show();
-            }
-           
-            
+                _gameLobby = new GameLobby();
+                _gameLobby.Show();
+            } 
         }
 
         private void btnOKLogin_Click(object sender, EventArgs e)
         {
-            _gameLobby = new GameLobby();
-            this.Hide();
-            if (_gameLobby.ShowDialog(this, _user))
+            // check email and password credintials
+            _user = new();
+            string email = this.boxEmailLogin.Text;
+            string password = this.boxPasswordLogin.Text;
+
+            if (
+                email.Length == 0 ||
+                password.Length == 0
+                )
             {
-                this.Show();
+                MessageBox.Show("Please fill in a fields", "Login", MessageBoxButtons.OK);
+                return;
+            }
+
+            string message = _dbAccess.Login(email, password);
+
+            if (message == "Logged In")
+            {
+                _gameLobby = new GameLobby();
+                _gameLobby.Show();  
+            }
+            else if (message == "Locked Out")
+            {
+                MessageBox.Show(message, "Login Error. Account locked. Please contact administrator", MessageBoxButtons.OK);
+                return;
+            }
+            else
+            {
+                MessageBox.Show(message, "Login Error. Wrong email and or password", MessageBoxButtons.OK);
+                return;
             }
             
 

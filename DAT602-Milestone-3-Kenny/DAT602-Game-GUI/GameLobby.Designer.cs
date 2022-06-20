@@ -59,9 +59,11 @@
             // 
             this.dataGridViewPlayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPlayers.Location = new System.Drawing.Point(55, 112);
+            this.dataGridViewPlayers.MultiSelect = false;
             this.dataGridViewPlayers.Name = "dataGridViewPlayers";
             this.dataGridViewPlayers.RowHeadersWidth = 51;
             this.dataGridViewPlayers.RowTemplate.Height = 29;
+            this.dataGridViewPlayers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewPlayers.Size = new System.Drawing.Size(300, 314);
             this.dataGridViewPlayers.TabIndex = 1;
             // 
@@ -179,6 +181,7 @@
             this.Controls.Add(this.labelTitleLobby);
             this.Name = "GameLobby";
             this.Text = "Game Lobby";
+            this.Load += new System.EventHandler(this.GameLobby_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPlayers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGames)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
