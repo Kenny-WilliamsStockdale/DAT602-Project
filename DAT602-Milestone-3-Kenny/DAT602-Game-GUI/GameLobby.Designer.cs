@@ -37,12 +37,12 @@
             this.btnLogoutLobby = new System.Windows.Forms.Button();
             this.btnAccountLobby = new System.Windows.Forms.Button();
             this.btnAdminLobby = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewChat = new System.Windows.Forms.DataGridView();
             this.btnChatLobby = new System.Windows.Forms.Button();
             this.boxChatLobby = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPlayers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGames)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewChat)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitleLobby
@@ -71,9 +71,11 @@
             // 
             this.dataGridViewGames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewGames.Location = new System.Drawing.Point(443, 112);
+            this.dataGridViewGames.MultiSelect = false;
             this.dataGridViewGames.Name = "dataGridViewGames";
             this.dataGridViewGames.RowHeadersWidth = 51;
             this.dataGridViewGames.RowTemplate.Height = 29;
+            this.dataGridViewGames.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewGames.Size = new System.Drawing.Size(300, 314);
             this.dataGridViewGames.TabIndex = 2;
             // 
@@ -135,15 +137,15 @@
             this.btnAdminLobby.UseVisualStyleBackColor = true;
             this.btnAdminLobby.Click += new System.EventHandler(this.btnAdminLobby_Click);
             // 
-            // dataGridView1
+            // dataGridViewChat
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(55, 444);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(688, 120);
-            this.dataGridView1.TabIndex = 9;
+            this.dataGridViewChat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewChat.Location = new System.Drawing.Point(55, 444);
+            this.dataGridViewChat.Name = "dataGridViewChat";
+            this.dataGridViewChat.RowHeadersWidth = 51;
+            this.dataGridViewChat.RowTemplate.Height = 29;
+            this.dataGridViewChat.Size = new System.Drawing.Size(688, 120);
+            this.dataGridViewChat.TabIndex = 9;
             // 
             // btnChatLobby
             // 
@@ -169,7 +171,7 @@
             this.ClientSize = new System.Drawing.Size(800, 740);
             this.Controls.Add(this.boxChatLobby);
             this.Controls.Add(this.btnChatLobby);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridViewChat);
             this.Controls.Add(this.btnAdminLobby);
             this.Controls.Add(this.btnAccountLobby);
             this.Controls.Add(this.btnLogoutLobby);
@@ -184,7 +186,7 @@
             this.Load += new System.EventHandler(this.GameLobby_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPlayers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGames)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewChat)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,7 +203,7 @@
         private Button btnLogoutLobby;
         private Button btnAccountLobby;
         private Button btnAdminLobby;
-        private DataGridView dataGridView1;
+        private DataGridView dataGridViewChat;
         private Button btnChatLobby;
         private TextBox boxChatLobby;
     }

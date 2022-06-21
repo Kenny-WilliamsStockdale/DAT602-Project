@@ -214,6 +214,42 @@ namespace DAT602_MS3_Game_GUI
             // expecting one table with one row
             return lsUsers;
         }
+
+        //GET ALL ACTIVE GAME SESSIONS INFORMATION
+        public List<Session> getAllSession()
+        {
+            List<Session> lsSessions = new List<Session>();
+
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Call getAllSession()");
+            foreach (DataRow record in aDataSet.Tables[0].Rows)
+            {
+                Session lcSessions = new Session();
+                lcSessions.SessionID = record.Field<Int32>("sessionID");
+                lsSessions.Add(lcSessions);
+            }
+
+            // expecting one table with one row
+            return lsSessions;
+        }
+
+        //GET ALL CHAT/MESSAGES INFORMATION
+        public List<Chat> GetAllchat()
+        {
+            List<Chat> lsChat = new List<Chat>();
+
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Call GetAllchat()");
+            foreach (DataRow record in aDataSet.Tables[0].Rows)
+            {
+                Chat lcChat = new Chat();
+                lcChat.ChatID = record.Field<Int32>("chatID");
+                lcChat.FromEmail = record.Field<String>("fromEmail");
+                lcChat.Message = record.Field<String>("message");
+                lsChat.Add(lcChat);
+            }
+
+            // expecting one table with one row
+            return lsChat;
+        }
     }
    
 }

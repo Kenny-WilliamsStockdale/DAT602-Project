@@ -43,9 +43,18 @@ namespace DAT602_MS3_Game_GUI
             dataGridViewPlayers.Columns[6].Visible = false;
             dataGridViewPlayers.Columns[7].Visible = false;
             dataGridViewPlayers.Columns[8].Visible = false;
+
+            //Session section
+            dataGridViewGames.DataSource = _dbAccess.getAllSession();
+            dataGridViewGames.Columns[0].HeaderText = "Game ID";
+
+            //Chat section
+            dataGridViewChat.DataSource = _dbAccess.GetAllchat();
+            dataGridViewChat.Columns[0].Visible = false;
+            dataGridViewChat.Columns[2].HeaderText = "From";
         }
 
-            private void btnLogoutLobby_Click(object sender, EventArgs e)
+        private void btnLogoutLobby_Click(object sender, EventArgs e)
         {
             _login.Show();
             DialogResult = DialogResult.Cancel;

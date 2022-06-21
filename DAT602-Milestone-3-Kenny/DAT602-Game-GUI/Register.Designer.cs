@@ -43,7 +43,6 @@
             this.boxPasswordRegister.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.boxPasswordRegister.Location = new System.Drawing.Point(179, 198);
             this.boxPasswordRegister.Name = "boxPasswordRegister";
-            this.boxPasswordRegister.PasswordChar = '*';
             this.boxPasswordRegister.Size = new System.Drawing.Size(265, 41);
             this.boxPasswordRegister.TabIndex = 7;
             // 

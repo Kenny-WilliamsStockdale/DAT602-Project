@@ -54,8 +54,9 @@ namespace DAT602_MS3_Game_GUI
                 return;
             }
             string message = _dbAccess.Register(email, username, password);
-            if (message == "Created User")
+            if (message == "USER ADDED")
             {
+                MessageBox.Show("Registration confirmed, Welcome!", "Register", MessageBoxButtons.OK);
                 PushData();
                 DialogResult = DialogResult.OK;
             }

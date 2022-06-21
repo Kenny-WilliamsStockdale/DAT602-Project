@@ -11,7 +11,7 @@ namespace DAT602_MS3_Game_GUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new GameLobby());
+            Application.Run(new Login());
         }
     }
 }
