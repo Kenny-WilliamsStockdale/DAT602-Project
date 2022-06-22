@@ -7,6 +7,9 @@
     <Compile Update="Admin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="EditUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="GameLobby.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace DAT602_MS3_Game_GUI
 {
-    class DataAccess
+    public class DataAccess
     {
         private static readonly String connectionString = "Server=localhost;Port=3306;Database=DAT602_Kenny_Project;Uid=root;password=@Marine33486";
         private MySql.Data.MySqlClient.MySqlConnection mySqlConnection = new(connectionString);
@@ -54,14 +54,14 @@ namespace DAT602_MS3_Game_GUI
         }
 
         //LOGOUT
-        public string Logout(string pUserName)
+        public string Logout(string pEmail)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
-            var aP = new MySqlParameter("@pUserName", MySqlDbType.VarChar, 50);
-            aP.Value = pUserName;
+            var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
+            aP.Value = pEmail;
             p.Add(aP);
 
-            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Logout(@pUserName)", p.ToArray());
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Logout(@pEmail)", p.ToArray());
 
 
             // expecting one table with one row
@@ -160,7 +160,7 @@ namespace DAT602_MS3_Game_GUI
         }
 
         //ADMIN UPDATE PLAYER INFORMATION 
-        public string adminUpdatePlayerInfo(string pUser, string pUserName, string pPassword)
+        public List<Message> adminUpdatePlayerInfo(string pUser, string pUserName, string pPassword, int pHighscore, int ploginCount, bool pLockout)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
             var aP = new MySqlParameter("@pUser", MySqlDbType.VarChar, 50);
@@ -172,12 +172,25 @@ namespace DAT602_MS3_Game_GUI
             var aP3 = new MySqlParameter("@pPassword", MySqlDbType.VarChar, 50);
             aP3.Value = pPassword;
             p.Add(aP3);
+            var aP4 = new MySqlParameter("@pHighscore", MySqlDbType.Int32, 10);
+            aP4.Value = pHighscore;
+            p.Add(aP4);
+            var aP5 = new MySqlParameter("@ploginCount", MySqlDbType.Int32, 10);
+            aP5.Value = ploginCount;
+            p.Add(aP5);
+            var aP6 = new MySqlParameter("@pLockout", MySqlDbType.Bit);
+            aP6.Value = pLockout;
+            p.Add(aP6);
 
-            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "adminUpdatePlayerInfo(@pUser,@pUserName,@pPassword)", p.ToArray());
-
-
-            // expecting one table with one row
-            return (aDataSet.Tables[0].Rows[0])["message"].ToString();
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "adminUpdatePlayerInfo(@pUser,@pUserName,@pPassword,@pHighscore,@ploginCount,@pLockout)", p.ToArray());
+            List<Message> dataList = new List<Message>();
+            foreach (DataRow row in aDataSet.Tables[0].Rows)
+            {
+                Message aMessage = new Message();
+                aMessage.TheMessage = row.Field<string>("Message");
+                dataList.Add(aMessage);
+            }
+            return dataList;
         }
 
         //GET SPEC PLAYER INFORMATION
@@ -188,7 +201,7 @@ namespace DAT602_MS3_Game_GUI
             aP.Value = pEmail;
             p.Add(aP);
 
-            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "GetAllPlayers(pEmail)", p.ToArray());
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Call GetPlayerInfo(@pEmail)", p.ToArray());
 
 
             // expecting one table with one row
@@ -208,6 +221,9 @@ namespace DAT602_MS3_Game_GUI
                 lcUser.Email = record.Field<String>("Email");
                 lcUser.HighScore = record.Field<Int32>("highScore");
                 lcUser.IsAdmin = record.Field<Boolean>("isAdmin");
+                lcUser.Password = record.Field<String>("password");
+                lcUser.LoginCount = record.Field<Int32>("loginCount");
+                lcUser.LockOut = record.Field<Boolean>("lockOut");
                 lsUsers.Add(lcUser);
             }
 

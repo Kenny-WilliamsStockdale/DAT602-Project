@@ -29,3 +29,4 @@ C:\Users\Kenny\source\repos\NMIT-GITHUB\DAT602-Project\DAT602-Milestone-3-Kenny\
 C:\Users\Kenny\source\repos\NMIT-GITHUB\DAT602-Project\DAT602-Milestone-3-Kenny\DAT602-Game-GUI\bin\Debug\net6.0-windows\Ubiety.Dns.Core.dll
 C:\Users\Kenny\source\repos\NMIT-GITHUB\DAT602-Project\DAT602-Milestone-3-Kenny\DAT602-Game-GUI\bin\Debug\net6.0-windows\ZstdNet.dll
 C:\Users\Kenny\source\repos\NMIT-GITHUB\DAT602-Project\DAT602-Milestone-3-Kenny\DAT602-Game-GUI\obj\Debug\net6.0-windows\DAT602-MS3-Game-GUI.csproj.CopyComplete
+C:\Users\Kenny\source\repos\NMIT-GITHUB\DAT602-Project\DAT602-Milestone-3-Kenny\DAT602-Game-GUI\obj\Debug\net6.0-windows\DAT602_MS3_Game_GUI.EditUserForm.resources

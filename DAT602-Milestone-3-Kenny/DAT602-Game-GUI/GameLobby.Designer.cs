@@ -33,13 +33,12 @@
             this.dataGridViewGames = new System.Windows.Forms.DataGridView();
             this.labelPlayersLobby = new System.Windows.Forms.Label();
             this.labelGamesLobby = new System.Windows.Forms.Label();
-            this.btnPlayLobby = new System.Windows.Forms.Button();
+            this.btnJoinLobby = new System.Windows.Forms.Button();
             this.btnLogoutLobby = new System.Windows.Forms.Button();
-            this.btnAccountLobby = new System.Windows.Forms.Button();
-            this.btnAdminLobby = new System.Windows.Forms.Button();
             this.dataGridViewChat = new System.Windows.Forms.DataGridView();
             this.btnChatLobby = new System.Windows.Forms.Button();
             this.boxChatLobby = new System.Windows.Forms.TextBox();
+            this.btnCreateLobby = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPlayers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGames)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewChat)).BeginInit();
@@ -58,14 +57,17 @@
             // dataGridViewPlayers
             // 
             this.dataGridViewPlayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewPlayers.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridViewPlayers.Location = new System.Drawing.Point(55, 112);
             this.dataGridViewPlayers.MultiSelect = false;
             this.dataGridViewPlayers.Name = "dataGridViewPlayers";
+            this.dataGridViewPlayers.ReadOnly = true;
             this.dataGridViewPlayers.RowHeadersWidth = 51;
             this.dataGridViewPlayers.RowTemplate.Height = 29;
             this.dataGridViewPlayers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewPlayers.Size = new System.Drawing.Size(300, 314);
             this.dataGridViewPlayers.TabIndex = 1;
+            this.dataGridViewPlayers.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewPlayers_CellMouseDoubleClick);
             // 
             // dataGridViewGames
             // 
@@ -97,45 +99,27 @@
             this.labelGamesLobby.TabIndex = 4;
             this.labelGamesLobby.Text = "Games";
             // 
-            // btnPlayLobby
+            // btnJoinLobby
             // 
-            this.btnPlayLobby.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPlayLobby.Location = new System.Drawing.Point(688, 694);
-            this.btnPlayLobby.Name = "btnPlayLobby";
-            this.btnPlayLobby.Size = new System.Drawing.Size(100, 34);
-            this.btnPlayLobby.TabIndex = 5;
-            this.btnPlayLobby.Text = "Play";
-            this.btnPlayLobby.UseVisualStyleBackColor = true;
+            this.btnJoinLobby.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnJoinLobby.Location = new System.Drawing.Point(688, 694);
+            this.btnJoinLobby.Name = "btnJoinLobby";
+            this.btnJoinLobby.Size = new System.Drawing.Size(100, 34);
+            this.btnJoinLobby.TabIndex = 5;
+            this.btnJoinLobby.Text = "Join";
+            this.btnJoinLobby.UseVisualStyleBackColor = true;
+            this.btnJoinLobby.Click += new System.EventHandler(this.btnJoinLobby_Click);
             // 
             // btnLogoutLobby
             // 
-            this.btnLogoutLobby.Location = new System.Drawing.Point(212, 699);
+            this.btnLogoutLobby.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnLogoutLobby.Location = new System.Drawing.Point(12, 699);
             this.btnLogoutLobby.Name = "btnLogoutLobby";
-            this.btnLogoutLobby.Size = new System.Drawing.Size(94, 29);
+            this.btnLogoutLobby.Size = new System.Drawing.Size(100, 34);
             this.btnLogoutLobby.TabIndex = 6;
             this.btnLogoutLobby.Text = "Logout";
             this.btnLogoutLobby.UseVisualStyleBackColor = true;
             this.btnLogoutLobby.Click += new System.EventHandler(this.btnLogoutLobby_Click);
-            // 
-            // btnAccountLobby
-            // 
-            this.btnAccountLobby.Location = new System.Drawing.Point(12, 699);
-            this.btnAccountLobby.Name = "btnAccountLobby";
-            this.btnAccountLobby.Size = new System.Drawing.Size(94, 29);
-            this.btnAccountLobby.TabIndex = 7;
-            this.btnAccountLobby.Text = "Account";
-            this.btnAccountLobby.UseVisualStyleBackColor = true;
-            this.btnAccountLobby.Click += new System.EventHandler(this.btnAccountLobby_Click);
-            // 
-            // btnAdminLobby
-            // 
-            this.btnAdminLobby.Location = new System.Drawing.Point(112, 699);
-            this.btnAdminLobby.Name = "btnAdminLobby";
-            this.btnAdminLobby.Size = new System.Drawing.Size(94, 29);
-            this.btnAdminLobby.TabIndex = 8;
-            this.btnAdminLobby.Text = "Admin";
-            this.btnAdminLobby.UseVisualStyleBackColor = true;
-            this.btnAdminLobby.Click += new System.EventHandler(this.btnAdminLobby_Click);
             // 
             // dataGridViewChat
             // 
@@ -164,18 +148,27 @@
             this.boxChatLobby.Size = new System.Drawing.Size(588, 73);
             this.boxChatLobby.TabIndex = 11;
             // 
+            // btnCreateLobby
+            // 
+            this.btnCreateLobby.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCreateLobby.Location = new System.Drawing.Point(582, 694);
+            this.btnCreateLobby.Name = "btnCreateLobby";
+            this.btnCreateLobby.Size = new System.Drawing.Size(100, 34);
+            this.btnCreateLobby.TabIndex = 12;
+            this.btnCreateLobby.Text = "Create";
+            this.btnCreateLobby.UseVisualStyleBackColor = true;
+            // 
             // GameLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 740);
+            this.Controls.Add(this.btnCreateLobby);
             this.Controls.Add(this.boxChatLobby);
             this.Controls.Add(this.btnChatLobby);
             this.Controls.Add(this.dataGridViewChat);
-            this.Controls.Add(this.btnAdminLobby);
-            this.Controls.Add(this.btnAccountLobby);
             this.Controls.Add(this.btnLogoutLobby);
-            this.Controls.Add(this.btnPlayLobby);
+            this.Controls.Add(this.btnJoinLobby);
             this.Controls.Add(this.labelGamesLobby);
             this.Controls.Add(this.labelPlayersLobby);
             this.Controls.Add(this.dataGridViewGames);
@@ -199,12 +192,11 @@
         private DataGridView dataGridViewGames;
         private Label labelPlayersLobby;
         private Label labelGamesLobby;
-        private Button btnPlayLobby;
+        private Button btnJoinLobby;
         private Button btnLogoutLobby;
-        private Button btnAccountLobby;
-        private Button btnAdminLobby;
         private DataGridView dataGridViewChat;
         private Button btnChatLobby;
         private TextBox boxChatLobby;
+        private Button btnCreateLobby;
     }
 }

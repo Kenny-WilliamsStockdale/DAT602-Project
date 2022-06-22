@@ -13,7 +13,9 @@ namespace DAT602_MS3_Game_GUI
     public partial class GameLobby : Form
     {
         private User _user;
-        string _email;
+        private string _email;
+        private DataRow? _player;
+        private List<Session> _session;
         private Login _login;
         private Account _account;
         private Admin _admin;
@@ -22,15 +24,15 @@ namespace DAT602_MS3_Game_GUI
         {
             InitializeComponent();
         }
-        public bool ShowDialog(Login login, User user)
+        public bool ShowDialog(string email, Login login)
         {
             _login = login;
-            _user = user;
+            _email = email;
             UpdateDisplay();
-            return ShowDialog() == DialogResult.OK;
+            return ShowDialog() == DialogResult.Cancel;
         }
 
-        private void UpdateDisplay()
+        public void UpdateDisplay()
         {
             //Player section
             dataGridViewPlayers.DataSource = _dbAccess.GetAllPlayers();
@@ -56,8 +58,14 @@ namespace DAT602_MS3_Game_GUI
 
         private void btnLogoutLobby_Click(object sender, EventArgs e)
         {
+            if(_email != null)
+            {
+                _dbAccess.Logout(_email);
+                
+            }
             _login.Show();
             DialogResult = DialogResult.Cancel;
+
         }
 
         private void btnAccountLobby_Click(object sender, EventArgs e)
@@ -87,6 +95,44 @@ namespace DAT602_MS3_Game_GUI
         private void GameLobby_Load(object sender, EventArgs e)
         {
             UpdateDisplay();
+        }
+
+        private void dataGridViewPlayers_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+          _player = _dbAccess.GetPlayerInfo(_email);
+            string adminCheck = _player["isAdmin"].ToString();
+
+            if (adminCheck == "True")
+            {
+                User aDataTransferObject = (User)dataGridViewPlayers.SelectedRows[0].DataBoundItem;
+                aDataTransferObject.Edit(this);
+            }
+            else
+            {
+                MessageBox.Show("Access Denied", "Admin", MessageBoxButtons.OK);
+                return;
+            }
+        }
+
+        private void btnJoinLobby_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewGames.RowCount == 0)
+            {
+                MessageBox.Show("There are no game sessions", "Game Session", MessageBoxButtons.OK);
+                return;
+            }
+            if (dataGridViewGames.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("Please select a game session", "Game Session", MessageBoxButtons.OK);
+                return;
+            }
+            _session = (List<Session>)dataGridViewGames.SelectedRows[0].DataBoundItem;
+            if (_session != null)
+            {
+                MessageBox.Show("Please select a Session", "Edit Session", MessageBoxButtons.OK);
+                return;
+            }
+
         }
     }
 }

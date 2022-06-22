@@ -59,19 +59,25 @@ namespace DAT602_MS3_Game_GUI
 
             string message = _dbAccess.Login(email, password);
 
+            
             if (message == "Logged In")
             {
+                this.Hide();
                 _gameLobby = new GameLobby();
-                _gameLobby.Show();  
+                if (
+                _gameLobby.ShowDialog(email, this))
+                {
+                    this.Show();
+                }
             }
             else if (message == "Locked Out")
             {
-                MessageBox.Show(message, "Login Error. Account locked. Please contact administrator", MessageBoxButtons.OK);
+                MessageBox.Show(message, "Login Error", MessageBoxButtons.OK);
                 return;
             }
             else
             {
-                MessageBox.Show(message, "Login Error. Wrong email and or password", MessageBoxButtons.OK);
+                MessageBox.Show(message, "Login Error.", MessageBoxButtons.OK);
                 return;
             }
             
