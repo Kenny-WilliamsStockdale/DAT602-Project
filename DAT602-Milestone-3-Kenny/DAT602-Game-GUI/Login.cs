@@ -37,7 +37,7 @@ namespace DAT602_MS3_Game_GUI
             if (_user != null && _register.ShowDialog(this, _user))
             {
                 _gameLobby = new GameLobby();
-                _gameLobby.Show();
+                _gameLobby.ShowDialog(_user.Email, this);
             } 
         }
 

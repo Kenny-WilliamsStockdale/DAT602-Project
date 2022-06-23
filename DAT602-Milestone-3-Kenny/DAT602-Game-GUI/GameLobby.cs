@@ -12,13 +12,14 @@ namespace DAT602_MS3_Game_GUI
 {
     public partial class GameLobby : Form
     {
-        private User _user;
+        private DataRow? _user;
         private string _email;
         private DataRow? _player;
-        private List<Session> _session;
+        private DataRow? _session;
         private Login _login;
         private Account _account;
         private Admin _admin;
+        private GameBoard _board;
         private DataAccess _dbAccess = new();
         public GameLobby()
         {
@@ -35,6 +36,7 @@ namespace DAT602_MS3_Game_GUI
         public void UpdateDisplay()
         {
             //Player section
+            _player = _dbAccess.GetPlayerInfo(_email);
             dataGridViewPlayers.DataSource = _dbAccess.GetAllPlayers();
             dataGridViewPlayers.Columns[0].Visible = false;
             dataGridViewPlayers.Columns[1].HeaderText = "User Name";
@@ -47,8 +49,11 @@ namespace DAT602_MS3_Game_GUI
             dataGridViewPlayers.Columns[8].Visible = false;
 
             //Session section
-            dataGridViewGames.DataSource = _dbAccess.getAllSession();
-            dataGridViewGames.Columns[0].HeaderText = "Game ID";
+            BindingSource session = new();
+            session.DataSource = _dbAccess.getAllSession().Tables[0];
+            dataGridViewGames.DataSource = session;
+            //dataGridViewGames.DataSource = _dbAccess.getAllSession();
+            //dataGridViewGames.Columns[0].HeaderText = "Game ID";
 
             //Chat section
             dataGridViewChat.DataSource = _dbAccess.GetAllchat();
@@ -58,10 +63,10 @@ namespace DAT602_MS3_Game_GUI
 
         private void btnLogoutLobby_Click(object sender, EventArgs e)
         {
-            if(_email != null)
+            if (_email != null)
             {
                 _dbAccess.Logout(_email);
-                
+
             }
             _login.Show();
             DialogResult = DialogResult.Cancel;
@@ -77,19 +82,6 @@ namespace DAT602_MS3_Game_GUI
         private void btnAdminLobby_Click(object sender, EventArgs e)
         {
 
-            if (_user.IsAdmin == true )
-            {
-                MessageBox.Show("Welcome", "Admin", MessageBoxButtons.OK);
-                return;
-                _admin = new Admin();
-                _admin.Show();
-            }
-            else
-            {
-                MessageBox.Show("Acess Denied", "Admin", MessageBoxButtons.OK);
-                return;
-            }
-            
         }
 
         private void GameLobby_Load(object sender, EventArgs e)
@@ -99,7 +91,6 @@ namespace DAT602_MS3_Game_GUI
 
         private void dataGridViewPlayers_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-          _player = _dbAccess.GetPlayerInfo(_email);
             string adminCheck = _player["isAdmin"].ToString();
 
             if (adminCheck == "True")
@@ -126,13 +117,28 @@ namespace DAT602_MS3_Game_GUI
                 MessageBox.Show("Please select a game session", "Game Session", MessageBoxButtons.OK);
                 return;
             }
-            _session = (List<Session>)dataGridViewGames.SelectedRows[0].DataBoundItem;
-            if (_session != null)
+            _session = (DataRow)((DataRowView)dataGridViewGames.SelectedRows[0].DataBoundItem).Row;
+            if (_session == null)
             {
                 MessageBox.Show("Please select a Session", "Edit Session", MessageBoxButtons.OK);
                 return;
             }
 
+            int sessionId = Convert.ToInt32(_session["sessionID"]);
+            string playerEmail = Convert.ToString(_player["email"]);
+            string message = _dbAccess.joinGame(playerEmail, sessionId);
+            if (message == "Welcome to the game")
+            {
+                _board = new();
+                this.Hide();
+            }
+            else if (message == "You have already joined the session")
+            {
+                MessageBox.Show("You have already joined the session", "Game", MessageBoxButtons.OK);
+                return;
+            }
+
+            this.Show();
         }
     }
 }

@@ -96,14 +96,17 @@ namespace DAT602_MS3_Game_GUI
         }
 
         //JOIN GAME 
-        public string joinGame(string pEmail)
+        public string joinGame(string pEmail, int pSelectedSession)
         {
             List<MySqlParameter> p = new List<MySqlParameter>();
             var aP = new MySqlParameter("@pEmail", MySqlDbType.VarChar, 50);
             aP.Value = pEmail;
             p.Add(aP);
+            var aP2 = new MySqlParameter("@pSelectedSession", MySqlDbType.Int32, 50);
+            aP2.Value = pSelectedSession;
+            p.Add(aP2);
 
-            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "joinGame(@pEmail)", p.ToArray());
+            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "joinGame(@pEmail,@pSelectedSession)", p.ToArray());
 
 
             // expecting one table with one row
@@ -232,20 +235,18 @@ namespace DAT602_MS3_Game_GUI
         }
 
         //GET ALL ACTIVE GAME SESSIONS INFORMATION
-        public List<Session> getAllSession()
+        public DataSet getAllSession()
         {
-            List<Session> lsSessions = new List<Session>();
+            return MySqlHelper.ExecuteDataset(mySqlConnection, "Call getAllSession()");
+            //foreach (DataRow record in aDataSet.Tables[0].Rows)
+            //{
+            //    Session lcSessions = new Session();
+            //    lcSessions.SessionID = record.Field<Int32>("sessionID");
+            //    lsSessions.Add(lcSessions);
+            //}
 
-            var aDataSet = MySqlHelper.ExecuteDataset(mySqlConnection, "Call getAllSession()");
-            foreach (DataRow record in aDataSet.Tables[0].Rows)
-            {
-                Session lcSessions = new Session();
-                lcSessions.SessionID = record.Field<Int32>("sessionID");
-                lsSessions.Add(lcSessions);
-            }
-
-            // expecting one table with one row
-            return lsSessions;
+            //// expecting one table with one row
+            //return lsSessions;
         }
 
         //GET ALL CHAT/MESSAGES INFORMATION
