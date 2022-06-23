@@ -19,7 +19,7 @@ namespace DAT602_MS3_Game_GUI
         private Login _login;
         private Account _account;
         private Admin _admin;
-        private GameBoard _board;
+        private GameBoard _board = new();
         private DataAccess _dbAccess = new();
         public GameLobby()
         {
@@ -126,19 +126,21 @@ namespace DAT602_MS3_Game_GUI
 
             int sessionId = Convert.ToInt32(_session["sessionID"]);
             string playerEmail = Convert.ToString(_player["email"]);
-            string message = _dbAccess.joinGame(playerEmail, sessionId);
-            if (message == "Welcome to the game")
-            {
-                _board = new();
-                this.Hide();
-            }
-            else if (message == "You have already joined the session")
-            {
-                MessageBox.Show("You have already joined the session", "Game", MessageBoxButtons.OK);
-                return;
-            }
 
-            this.Show();
+            //string message = _dbAccess.joinGame(playerEmail, sessionId); CURRENTLY DOES NOT WORK DUE TO RETURN
+
+            //if (message == "Welcome to the game")
+            //{
+            //    _board = new();
+            //    this.Hide();
+            //}
+            //else if (message == "You have already joined the session")
+            //{
+            //    MessageBox.Show("You have already joined the session", "Game", MessageBoxButtons.OK);
+            //    return;
+            //}
+
+            _board.Show();
         }
     }
 }
